@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: e5efffe0bc6976946a6a7da86706f485
+guid: eaec0f6d7fc35de43ab52fd5db8fd0bf
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4791933319107811712
-    second: personagem-removebg-preview_0
+      213: -7904547336580311409
+    second: bandeira_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -77,7 +77,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -115,13 +115,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: personagem-removebg-preview_0
+      name: bandeira_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 874
-        height: 285
+        width: 409
+        height: 610
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -130,8 +130,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 0866837f802af7db0800000000000000
-      internalID: -4791933319107811712
+      spriteID: f86ded4d3186d4290800000000000000
+      internalID: -7904547336580311409
       vertices: []
       indices: 
       edges: []
@@ -150,7 +150,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      personagem-removebg-preview_0: -4791933319107811712
+      bandeira_0: -7904547336580311409
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

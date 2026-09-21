@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: e5efffe0bc6976946a6a7da86706f485
+guid: d52270de09222b1439b741d0d9fe84e1
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4791933319107811712
-    second: personagem-removebg-preview_0
+      213: -1311018314348410255
+    second: parado_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,7 +46,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -115,13 +115,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: personagem-removebg-preview_0
+      name: parado_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 874
-        height: 285
+        width: 107
+        height: 188
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -130,8 +130,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 0866837f802af7db0800000000000000
-      internalID: -4791933319107811712
+      spriteID: 17a4b370ac35ecde0800000000000000
+      internalID: -1311018314348410255
       vertices: []
       indices: 
       edges: []
@@ -140,7 +140,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -150,7 +150,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      personagem-removebg-preview_0: -4791933319107811712
+      parado_0: -1311018314348410255
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

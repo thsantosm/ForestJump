@@ -13,53 +13,87 @@ public class PlayerController : MonoBehaviour
     public LayerMask groundLayer;
 
     private Rigidbody2D rb;
+    private Animator anim;
+    private SpriteRenderer spriteRenderer;
+
     private float moveInput;
     private bool isGrounded;
+    private bool isDead = false;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     void Update()
+{
+    if (isDead) return;
+
+    // 1. Controles
+    moveInput = Input.GetAxisRaw("Horizontal");
+
+    // 2. Checagem de Chão
+    isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
+
+    // 3. Pulo
+    if (Input.GetButtonDown("Jump") && isGrounded)
     {
-        // 1. Controles (Setas / A e D)
-        moveInput = Input.GetAxisRaw("Horizontal");
-
-        // 2. Checagem de Chão (Física)
-        isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
-
-        // 3. Pulo
-        if (Input.GetButtonDown("Jump") && isGrounded)
-        {
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
-        }
+        rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
     }
+
+    // 4. Espelhar Sprite
+    if (moveInput > 0) spriteRenderer.flipX = false;
+    else if (moveInput < 0) spriteRenderer.flipX = true;
+
+    // 5. Atualizar Parâmetros do Animator com filtro de sensibilidade
+    if (anim != null)
+    {
+        float speedValue = Mathf.Abs(moveInput) > 0.05f ? Mathf.Abs(moveInput) : 0f;
+        anim.SetFloat("Speed", speedValue);
+        anim.SetBool("isGrounded", isGrounded);
+    }
+}
 
     void FixedUpdate()
     {
+        if (isDead) return;
+
         // Movimentação horizontal
         rb.linearVelocity = new Vector2(moveInput * moveSpeed, rb.linearVelocity.y);
     }
 
-    // 4. Interações e Colisões (Coletáveis e Vitória)
+    // 6. Interações e Colisões (Coletáveis e Vitória)
     private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Collectible"))
-        {
-            Destroy(collision.gameObject); // Coleta o item
-        }
+{
+    if (isDead) return;
 
-        if (collision.CompareTag("Finish"))
-        {
-            // Carrega a Fase 2 ou recarrega a cena (Vitória)
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); 
-        }
+    if (collision.CompareTag("Collectible"))
+    {
+        Destroy(collision.gameObject);
     }
 
-    // 5. Colisão com Inimigos (Core Loop: Pular na cabeça = Destrói / Lateral = Derrota)
+    if (collision.CompareTag("Finish"))
+    {
+        if (anim != null)
+        {
+            anim.SetBool("isGrounded", true);
+            anim.SetTrigger("win");
+        }
+
+        rb.linearVelocity = Vector2.zero;
+        this.enabled = false;
+
+        Invoke("ReloadScene", 2.0f);
+    }
+}
+
+    // 7. Colisão com Inimigos (Core Loop: Pular na cabeça = Destrói / Lateral = Derrota)
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        if (isDead) return;
+
         if (collision.gameObject.CompareTag("Enemy"))
         {
             // Se o Player estiver caindo em cima do inimigo (pulo na cabeça)
@@ -71,8 +105,14 @@ public class PlayerController : MonoBehaviour
             else
             {
                 // Derrota / Reinicia a cena
+                isDead = true;
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             }
         }
+    }
+
+    private void ReloadScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
