@@ -28,33 +28,33 @@ public class PlayerController : MonoBehaviour
     }
 
     void Update()
-{
-    if (isDead) return;
-
-    // 1. Controles
-    moveInput = Input.GetAxisRaw("Horizontal");
-
-    // 2. Checagem de Chão
-    isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
-
-    // 3. Pulo
-    if (Input.GetButtonDown("Jump") && isGrounded)
     {
-        rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
-    }
+        if (isDead) return;
 
-    // 4. Espelhar Sprite
-    if (moveInput > 0) spriteRenderer.flipX = false;
-    else if (moveInput < 0) spriteRenderer.flipX = true;
+        // 1. Controles
+        moveInput = Input.GetAxisRaw("Horizontal");
 
-    // 5. Atualizar Parâmetros do Animator com filtro de sensibilidade
-    if (anim != null)
-    {
-        float speedValue = Mathf.Abs(moveInput) > 0.05f ? Mathf.Abs(moveInput) : 0f;
-        anim.SetFloat("Speed", speedValue);
-        anim.SetBool("isGrounded", isGrounded);
+        // 2. Checagem de Chão
+        isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
+
+        // 3. Pulo
+        if (Input.GetButtonDown("Jump") && isGrounded)
+        {
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+        }
+
+        // 4. Espelhar Sprite
+        if (moveInput > 0) spriteRenderer.flipX = false;
+        else if (moveInput < 0) spriteRenderer.flipX = true;
+
+        // 5. Atualizar Parâmetros do Animator com filtro de sensibilidade
+        if (anim != null)
+        {
+            float speedValue = Mathf.Abs(moveInput) > 0.05f ? Mathf.Abs(moveInput) : 0f;
+            anim.SetFloat("Speed", speedValue);
+            anim.SetBool("isGrounded", isGrounded);
+        }
     }
-}
 
     void FixedUpdate()
     {
@@ -64,30 +64,36 @@ public class PlayerController : MonoBehaviour
         rb.linearVelocity = new Vector2(moveInput * moveSpeed, rb.linearVelocity.y);
     }
 
-    // 6. Interações e Colisões (Coletáveis e Vitória)
+    // 6. Interações e Colisões (Coletáveis, Buracos e Vitória)
     private void OnTriggerEnter2D(Collider2D collision)
-{
-    if (isDead) return;
-
-    if (collision.CompareTag("Collectible"))
     {
-        Destroy(collision.gameObject);
-    }
+        if (isDead) return;
 
-    if (collision.CompareTag("Finish"))
-    {
-        if (anim != null)
+        if (collision.CompareTag("Collectible"))
         {
-            anim.SetBool("isGrounded", true);
-            anim.SetTrigger("win");
+            Destroy(collision.gameObject);
         }
 
-        rb.linearVelocity = Vector2.zero;
-        this.enabled = false;
+        // Queda no Buraco (Gatilho com a tag KillZone)
+        if (collision.CompareTag("KillZone"))
+        {
+            Die();
+        }
 
-        Invoke("ReloadScene", 2.0f);
+        if (collision.CompareTag("Finish"))
+        {
+            if (anim != null)
+            {
+                anim.SetBool("isGrounded", true);
+                anim.SetTrigger("win");
+            }
+
+            rb.linearVelocity = Vector2.zero;
+            this.enabled = false;
+
+            Invoke("ReloadScene", 2.0f);
+        }
     }
-}
 
     // 7. Colisão com Inimigos (Core Loop: Pular na cabeça = Destrói / Lateral = Derrota)
     private void OnCollisionEnter2D(Collision2D collision)
@@ -104,11 +110,24 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                // Derrota / Reinicia a cena
-                isDead = true;
-                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                // Dano lateral = Derrota
+                Die();
             }
         }
+    }
+
+    // 8. Método unificado de Morte / Reinício
+    public void Die()
+    {
+        if (isDead) return;
+
+        isDead = true;
+
+        // Para qualquer movimento do jogador
+        rb.linearVelocity = Vector2.zero;
+
+        // Recarrega a cena atual
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     private void ReloadScene()

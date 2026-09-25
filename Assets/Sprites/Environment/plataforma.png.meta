@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: eaec0f6d7fc35de43ab52fd5db8fd0bf
+guid: f6e62bb22e63feb43a60de6a83e40987
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -7904547336580311409
-    second: bandeira_0
+      213: 5766548593978449095
+    second: plataforma_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -48,10 +48,10 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 64
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -102,13 +102,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: bandeira_0
+      name: plataforma_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 556
-        height: 560
+        width: 76
+        height: 18
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -117,8 +117,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f86ded4d3186d4290800000000000000
-      internalID: -7904547336580311409
+      spriteID: 7cc1d1cc465e60050800000000000000
+      internalID: 5766548593978449095
       vertices: []
       indices: 
       edges: []
@@ -127,7 +127,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -137,7 +137,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      bandeira_0: -7904547336580311409
+      plataforma_0: 5766548593978449095
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
